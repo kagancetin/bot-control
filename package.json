@@ -1,0 +1,24 @@
+{
+  "name": "cafeapp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "author": "İsmet Kağan Çetin",
+  "license": "ISC",
+  "dependencies": {
+    "connect-flash": "^0.1.1",
+    "express": "^4.17.1",
+    "express-graphql": "^0.12.0",
+    "express-handlebars": "^5.3.3",
+    "express-session": "^1.17.2",
+    "graphql": "^15.5.1",
+    "handlebars-helpers": "^0.10.0",
+    "mongoose": "^5.13.7",
+    "path": "^0.12.7",
+    "session": "^0.1.0",
+    "socket.io": "^4.4.0"
+  }
+}

@@ -1,0 +1,64 @@
+
+<body class="hold-transition sidebar-mini layout-fixed" data-panel-auto-height-mode="height">
+<div class="wrapper">
+
+
+  <!-- Main Sidebar Container -->
+  {{> sidebarMenu}}
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper iframe-mode" data-widget="iframe" data-loading-screen="750">
+    <div class="nav navbar navbar-expand navbar-white navbar-light border-bottom p-0">
+        <a class="nav-link bg-light" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+      <div class="nav-item dropdown">
+        <a class="nav-link bg-danger dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Sekmeler</a>
+        <div class="dropdown-menu mt-0">
+          <a class="dropdown-item" href="#" data-widget="iframe-close" data-type="all">Tümünü Kapat</a>
+          <a class="dropdown-item" href="#" data-widget="iframe-close" data-type="all-other">Diğerlerini Kapat</a>
+        </div>
+      </div>
+      <a class="nav-link bg-light" href="#" data-widget="iframe-scrollleft"><i class="fas fa-angle-double-left"></i></a>
+      <ul class="navbar-nav overflow-hidden" role="tablist"></ul>
+      <a class="nav-link bg-light" href="#" data-widget="iframe-scrollright"><i class="fas fa-angle-double-right"></i></a>
+      <a class="nav-link bg-light" href="#" data-widget="iframe-fullscreen"><i class="fas fa-expand"></i></a>
+    </div>
+    <div class="tab-content">
+      <div class="tab-empty">
+        <div id="servers" class="flex"></div>
+      </div>
+    </div>
+  </div>
+  <!-- /.content-wrapper -->
+  {{> footer}}
+
+</div>
+<!-- ./wrapper -->
+
+
+{{#section "script"}}
+<script>
+  alert();
+  var socket = io.connect( 'http://127.0.0.1:8080');
+
+  window.onload=()=>{
+    socket.emit("allServer");
+
+    socket.on("allServer", (data) => {
+      data.forEach((Guild) => {
+          $("#servers").append(`
+<img class="server-${Guild.id}" onclick="window.location = '/servers/${
+            Guild.id
+          }'" width="60" height="60" src="${
+            Guild.icon
+              ? `https://cdn.discordapp.com/icons/${Guild.id}/${Guild.icon}.png`
+              : "https://www.webcolorsonline.com/images/error.png"
+          }" alt="${Guild.name}">
+`); //yes ofcource im an IDIOT
+          $(`.server-${Guild.id}`).hover(() => {
+            $(".server-name").text(Guild.name);
+          });
+        });
+      });
+  }
+</script>
+
+{{/section}}
