@@ -3,8 +3,11 @@ const crypto = require("crypto")
 
 module.exports = {
   getPage: async (req, res) => {
-    const coupons = await Redeem.find()
-    res.render("pages/coupon", {coupons: coupons.map(coupon => coupon.toJSON())})
+    let coupons = await Redeem.find().catch(err => {
+      console.log(err)
+    })
+    console.log(coupons)
+    res.render("pages/coupon", {coupons: coupons ? coupons.map(coupon => coupon.toJSON()) : []})
   },
   getAll: async (req, res) => {
     const coupons = await Redeem.find()
@@ -18,7 +21,7 @@ module.exports = {
     const {time} = req.body
     console.log(req.body)
     const code = crypto.randomBytes(12).toString("hex")
-    Redeem.create({code, time, redeemed: true})
+    Redeem.create({code, time})
       .then(coupon => {
         res.redirect("/coupon")
       })
